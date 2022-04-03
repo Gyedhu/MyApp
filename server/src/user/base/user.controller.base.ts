@@ -315,7 +315,6 @@ export class UserControllerBase {
           },
         },
 
-        test: true,
         updatedAt: true,
 
         user: {

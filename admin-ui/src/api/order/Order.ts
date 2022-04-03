@@ -5,7 +5,6 @@ export type Order = {
   createdAt: Date;
   id: string;
   product?: Product | null;
-  test: string;
   updatedAt: Date;
   user?: User | null;
 };
