@@ -25,7 +25,7 @@ class PostUpdateInput {
   @Field(() => String, {
     nullable: true,
   })
-  content?: string;
+  content?: string | null;
 
   @ApiProperty({
     required: false,

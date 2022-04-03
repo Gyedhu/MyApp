@@ -44,6 +44,14 @@ class Order {
 
   @ApiProperty({
     required: true,
+    type: String,
+  })
+  @IsString()
+  @Field(() => String)
+  test!: string;
+
+  @ApiProperty({
+    required: true,
   })
   @IsDate()
   @Type(() => Date)

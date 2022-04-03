@@ -43,6 +43,17 @@ class OrderWhereInput {
 
   @ApiProperty({
     required: false,
+    type: StringFilter,
+  })
+  @Type(() => StringFilter)
+  @IsOptional()
+  @Field(() => StringFilter, {
+    nullable: true,
+  })
+  test?: StringFilter;
+
+  @ApiProperty({
+    required: false,
     type: () => UserWhereUniqueInput,
   })
   @ValidateNested()

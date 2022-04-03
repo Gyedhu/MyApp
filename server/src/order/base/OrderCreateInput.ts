@@ -12,7 +12,7 @@ https://docs.amplication.com/docs/how-to/custom-code
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { ProductWhereUniqueInput } from "../../product/base/ProductWhereUniqueInput";
-import { ValidateNested, IsOptional } from "class-validator";
+import { ValidateNested, IsOptional, IsString } from "class-validator";
 import { Type } from "class-transformer";
 import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
 @InputType()
@@ -28,6 +28,14 @@ class OrderCreateInput {
     nullable: true,
   })
   product?: ProductWhereUniqueInput | null;
+
+  @ApiProperty({
+    required: true,
+    type: String,
+  })
+  @IsString()
+  @Field(() => String)
+  test!: string;
 
   @ApiProperty({
     required: false,

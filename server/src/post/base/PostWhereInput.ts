@@ -11,22 +11,23 @@ https://docs.amplication.com/docs/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { StringFilter } from "../../util/StringFilter";
+import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { Type } from "class-transformer";
 import { IsOptional, ValidateNested } from "class-validator";
+import { StringFilter } from "../../util/StringFilter";
 import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
 @InputType()
 class PostWhereInput {
   @ApiProperty({
     required: false,
-    type: StringFilter,
+    type: StringNullableFilter,
   })
-  @Type(() => StringFilter)
+  @Type(() => StringNullableFilter)
   @IsOptional()
-  @Field(() => StringFilter, {
+  @Field(() => StringNullableFilter, {
     nullable: true,
   })
-  content?: StringFilter;
+  content?: StringNullableFilter;
 
   @ApiProperty({
     required: false,

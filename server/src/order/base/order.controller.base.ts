@@ -96,6 +96,7 @@ export class OrderControllerBase {
           },
         },
 
+        test: true,
         updatedAt: true,
 
         user: {
@@ -145,6 +146,7 @@ export class OrderControllerBase {
           },
         },
 
+        test: true,
         updatedAt: true,
 
         user: {
@@ -193,6 +195,7 @@ export class OrderControllerBase {
           },
         },
 
+        test: true,
         updatedAt: true,
 
         user: {
@@ -276,6 +279,7 @@ export class OrderControllerBase {
             },
           },
 
+          test: true,
           updatedAt: true,
 
           user: {
@@ -325,6 +329,7 @@ export class OrderControllerBase {
             },
           },
 
+          test: true,
           updatedAt: true,
 
           user: {
