@@ -1,5 +1,7 @@
 import { Module } from "@nestjs/common";
 import { UserModule } from "./user/user.module";
+import { ProductModule } from "./product/product.module";
+import { OrderModule } from "./order/order.module";
 import { ACLModule } from "./auth/acl.module";
 import { AuthModule } from "./auth/auth.module";
 import { HealthModule } from "./health/health.module";
@@ -14,6 +16,8 @@ import { GraphQLModule } from "@nestjs/graphql";
   controllers: [],
   imports: [
     UserModule,
+    ProductModule,
+    OrderModule,
     ACLModule,
     AuthModule,
     HealthModule,
