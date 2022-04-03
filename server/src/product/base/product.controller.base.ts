@@ -295,7 +295,6 @@ export class ProductControllerBase {
           },
         },
 
-        test: true,
         updatedAt: true,
 
         user: {
