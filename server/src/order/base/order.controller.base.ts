@@ -27,6 +27,7 @@ import { OrderWhereUniqueInput } from "./OrderWhereUniqueInput";
 import { OrderFindManyArgs } from "./OrderFindManyArgs";
 import { OrderUpdateInput } from "./OrderUpdateInput";
 import { Order } from "./Order";
+import { Post } from "../../post/base/Post";
 @swagger.ApiBearerAuth()
 export class OrderControllerBase {
   constructor(

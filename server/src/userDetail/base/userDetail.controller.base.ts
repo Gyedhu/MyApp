@@ -27,6 +27,7 @@ import { UserDetailWhereUniqueInput } from "./UserDetailWhereUniqueInput";
 import { UserDetailFindManyArgs } from "./UserDetailFindManyArgs";
 import { UserDetailUpdateInput } from "./UserDetailUpdateInput";
 import { UserDetail } from "./UserDetail";
+import { Post } from "../../post/base/Post";
 @swagger.ApiBearerAuth()
 export class UserDetailControllerBase {
   constructor(
