@@ -27,6 +27,7 @@ import { ProductWhereUniqueInput } from "./ProductWhereUniqueInput";
 import { ProductFindManyArgs } from "./ProductFindManyArgs";
 import { ProductUpdateInput } from "./ProductUpdateInput";
 import { Product } from "./Product";
+import { Post } from "../../post/base/Post";
 import { OrderFindManyArgs } from "../../order/base/OrderFindManyArgs";
 import { Order } from "../../order/base/Order";
 import { OrderWhereUniqueInput } from "../../order/base/OrderWhereUniqueInput";
