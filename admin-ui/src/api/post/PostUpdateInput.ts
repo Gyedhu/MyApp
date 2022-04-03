@@ -1,6 +1,6 @@
 import { UserWhereUniqueInput } from "../user/UserWhereUniqueInput";
 
 export type PostUpdateInput = {
-  content?: string;
+  content?: string | null;
   user?: UserWhereUniqueInput;
 };

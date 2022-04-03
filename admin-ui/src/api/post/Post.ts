@@ -1,7 +1,7 @@
 import { User } from "../user/User";
 
 export type Post = {
-  content: string;
+  content: string | null;
   createdAt: Date;
   id: string;
   updatedAt: Date;
