@@ -19,34 +19,31 @@ import * as gqlUserRoles from "../../auth/gqlUserRoles.decorator";
 import * as abacUtil from "../../auth/abac.util";
 import { isRecordNotFoundError } from "../../prisma.util";
 import { MetaQueryPayload } from "../../util/MetaQueryPayload";
-import { CreateUserArgs } from "./CreateUserArgs";
-import { UpdateUserArgs } from "./UpdateUserArgs";
-import { DeleteUserArgs } from "./DeleteUserArgs";
-import { UserFindManyArgs } from "./UserFindManyArgs";
-import { UserFindUniqueArgs } from "./UserFindUniqueArgs";
-import { User } from "./User";
-import { OrderFindManyArgs } from "../../order/base/OrderFindManyArgs";
-import { Order } from "../../order/base/Order";
-import { UserDetailFindManyArgs } from "../../userDetail/base/UserDetailFindManyArgs";
-import { UserDetail } from "../../userDetail/base/UserDetail";
-import { UserService } from "../user.service";
+import { CreateUserDetailArgs } from "./CreateUserDetailArgs";
+import { UpdateUserDetailArgs } from "./UpdateUserDetailArgs";
+import { DeleteUserDetailArgs } from "./DeleteUserDetailArgs";
+import { UserDetailFindManyArgs } from "./UserDetailFindManyArgs";
+import { UserDetailFindUniqueArgs } from "./UserDetailFindUniqueArgs";
+import { UserDetail } from "./UserDetail";
+import { User } from "../../user/base/User";
+import { UserDetailService } from "../userDetail.service";
 
-@graphql.Resolver(() => User)
+@graphql.Resolver(() => UserDetail)
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
-export class UserResolverBase {
+export class UserDetailResolverBase {
   constructor(
-    protected readonly service: UserService,
+    protected readonly service: UserDetailService,
     protected readonly rolesBuilder: nestAccessControl.RolesBuilder
   ) {}
 
   @graphql.Query(() => MetaQueryPayload)
   @nestAccessControl.UseRoles({
-    resource: "User",
+    resource: "UserDetail",
     action: "read",
     possession: "any",
   })
-  async _usersMeta(
-    @graphql.Args() args: UserFindManyArgs
+  async _userDetailsMeta(
+    @graphql.Args() args: UserDetailFindManyArgs
   ): Promise<MetaQueryPayload> {
     const results = await this.service.count({
       ...args,
@@ -58,41 +55,41 @@ export class UserResolverBase {
     };
   }
 
-  @graphql.Query(() => [User])
+  @graphql.Query(() => [UserDetail])
   @nestAccessControl.UseRoles({
-    resource: "User",
+    resource: "UserDetail",
     action: "read",
     possession: "any",
   })
-  async users(
-    @graphql.Args() args: UserFindManyArgs,
+  async userDetails(
+    @graphql.Args() args: UserDetailFindManyArgs,
     @gqlUserRoles.UserRoles() userRoles: string[]
-  ): Promise<User[]> {
+  ): Promise<UserDetail[]> {
     const permission = this.rolesBuilder.permission({
       role: userRoles,
       action: "read",
       possession: "any",
-      resource: "User",
+      resource: "UserDetail",
     });
     const results = await this.service.findMany(args);
     return results.map((result) => permission.filter(result));
   }
 
-  @graphql.Query(() => User, { nullable: true })
+  @graphql.Query(() => UserDetail, { nullable: true })
   @nestAccessControl.UseRoles({
-    resource: "User",
+    resource: "UserDetail",
     action: "read",
     possession: "own",
   })
-  async user(
-    @graphql.Args() args: UserFindUniqueArgs,
+  async userDetail(
+    @graphql.Args() args: UserDetailFindUniqueArgs,
     @gqlUserRoles.UserRoles() userRoles: string[]
-  ): Promise<User | null> {
+  ): Promise<UserDetail | null> {
     const permission = this.rolesBuilder.permission({
       role: userRoles,
       action: "read",
       possession: "own",
-      resource: "User",
+      resource: "UserDetail",
     });
     const result = await this.service.findOne(args);
     if (result === null) {
@@ -101,21 +98,21 @@ export class UserResolverBase {
     return permission.filter(result);
   }
 
-  @graphql.Mutation(() => User)
+  @graphql.Mutation(() => UserDetail)
   @nestAccessControl.UseRoles({
-    resource: "User",
+    resource: "UserDetail",
     action: "create",
     possession: "any",
   })
-  async createUser(
-    @graphql.Args() args: CreateUserArgs,
+  async createUserDetail(
+    @graphql.Args() args: CreateUserDetailArgs,
     @gqlUserRoles.UserRoles() userRoles: string[]
-  ): Promise<User> {
+  ): Promise<UserDetail> {
     const permission = this.rolesBuilder.permission({
       role: userRoles,
       action: "create",
       possession: "any",
-      resource: "User",
+      resource: "UserDetail",
     });
     const invalidAttributes = abacUtil.getInvalidAttributes(
       permission,
@@ -129,31 +126,39 @@ export class UserResolverBase {
         .map((role: string) => JSON.stringify(role))
         .join(",");
       throw new apollo.ApolloError(
-        `providing the properties: ${properties} on ${"User"} creation is forbidden for roles: ${roles}`
+        `providing the properties: ${properties} on ${"UserDetail"} creation is forbidden for roles: ${roles}`
       );
     }
     // @ts-ignore
     return await this.service.create({
       ...args,
-      data: args.data,
+      data: {
+        ...args.data,
+
+        user: args.data.user
+          ? {
+              connect: args.data.user,
+            }
+          : undefined,
+      },
     });
   }
 
-  @graphql.Mutation(() => User)
+  @graphql.Mutation(() => UserDetail)
   @nestAccessControl.UseRoles({
-    resource: "User",
+    resource: "UserDetail",
     action: "update",
     possession: "any",
   })
-  async updateUser(
-    @graphql.Args() args: UpdateUserArgs,
+  async updateUserDetail(
+    @graphql.Args() args: UpdateUserDetailArgs,
     @gqlUserRoles.UserRoles() userRoles: string[]
-  ): Promise<User | null> {
+  ): Promise<UserDetail | null> {
     const permission = this.rolesBuilder.permission({
       role: userRoles,
       action: "update",
       possession: "any",
-      resource: "User",
+      resource: "UserDetail",
     });
     const invalidAttributes = abacUtil.getInvalidAttributes(
       permission,
@@ -167,14 +172,22 @@ export class UserResolverBase {
         .map((role: string) => JSON.stringify(role))
         .join(",");
       throw new apollo.ApolloError(
-        `providing the properties: ${properties} on ${"User"} update is forbidden for roles: ${roles}`
+        `providing the properties: ${properties} on ${"UserDetail"} update is forbidden for roles: ${roles}`
       );
     }
     try {
       // @ts-ignore
       return await this.service.update({
         ...args,
-        data: args.data,
+        data: {
+          ...args.data,
+
+          user: args.data.user
+            ? {
+                connect: args.data.user,
+              }
+            : undefined,
+        },
       });
     } catch (error) {
       if (isRecordNotFoundError(error)) {
@@ -186,13 +199,15 @@ export class UserResolverBase {
     }
   }
 
-  @graphql.Mutation(() => User)
+  @graphql.Mutation(() => UserDetail)
   @nestAccessControl.UseRoles({
-    resource: "User",
+    resource: "UserDetail",
     action: "delete",
     possession: "any",
   })
-  async deleteUser(@graphql.Args() args: DeleteUserArgs): Promise<User | null> {
+  async deleteUserDetail(
+    @graphql.Args() args: DeleteUserDetailArgs
+  ): Promise<UserDetail | null> {
     try {
       // @ts-ignore
       return await this.service.delete(args);
@@ -206,55 +221,27 @@ export class UserResolverBase {
     }
   }
 
-  @graphql.ResolveField(() => [Order])
+  @graphql.ResolveField(() => User, { nullable: true })
   @nestAccessControl.UseRoles({
-    resource: "User",
+    resource: "UserDetail",
     action: "read",
     possession: "any",
   })
-  async orders(
-    @graphql.Parent() parent: User,
-    @graphql.Args() args: OrderFindManyArgs,
+  async user(
+    @graphql.Parent() parent: UserDetail,
     @gqlUserRoles.UserRoles() userRoles: string[]
-  ): Promise<Order[]> {
+  ): Promise<User | null> {
     const permission = this.rolesBuilder.permission({
       role: userRoles,
       action: "read",
       possession: "any",
-      resource: "Order",
+      resource: "User",
     });
-    const results = await this.service.findOrders(parent.id, args);
+    const result = await this.service.getUser(parent.id);
 
-    if (!results) {
-      return [];
+    if (!result) {
+      return null;
     }
-
-    return results.map((result) => permission.filter(result));
-  }
-
-  @graphql.ResolveField(() => [UserDetail])
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "read",
-    possession: "any",
-  })
-  async userDetails(
-    @graphql.Parent() parent: User,
-    @graphql.Args() args: UserDetailFindManyArgs,
-    @gqlUserRoles.UserRoles() userRoles: string[]
-  ): Promise<UserDetail[]> {
-    const permission = this.rolesBuilder.permission({
-      role: userRoles,
-      action: "read",
-      possession: "any",
-      resource: "UserDetail",
-    });
-    const results = await this.service.findUserDetails(parent.id, args);
-
-    if (!results) {
-      return [];
-    }
-
-    return results.map((result) => permission.filter(result));
+    return permission.filter(result);
   }
 }

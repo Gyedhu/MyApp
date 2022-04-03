@@ -14,6 +14,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsString, IsOptional, ValidateNested } from "class-validator";
 import { OrderCreateNestedManyWithoutUsersInput } from "./OrderCreateNestedManyWithoutUsersInput";
 import { Type } from "class-transformer";
+import { UserDetailCreateNestedManyWithoutUsersInput } from "./UserDetailCreateNestedManyWithoutUsersInput";
 @InputType()
 class UserCreateInput {
   @ApiProperty({
@@ -67,6 +68,18 @@ class UserCreateInput {
   })
   @Field(() => [String])
   roles!: Array<string>;
+
+  @ApiProperty({
+    required: false,
+    type: () => UserDetailCreateNestedManyWithoutUsersInput,
+  })
+  @ValidateNested()
+  @Type(() => UserDetailCreateNestedManyWithoutUsersInput)
+  @IsOptional()
+  @Field(() => UserDetailCreateNestedManyWithoutUsersInput, {
+    nullable: true,
+  })
+  userDetails?: UserDetailCreateNestedManyWithoutUsersInput;
 
   @ApiProperty({
     required: true,
