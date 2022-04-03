@@ -1,4 +1,5 @@
 import { OrderCreateNestedManyWithoutUsersInput } from "./OrderCreateNestedManyWithoutUsersInput";
+import { UserDetailCreateNestedManyWithoutUsersInput } from "./UserDetailCreateNestedManyWithoutUsersInput";
 
 export type UserCreateInput = {
   firstName?: string | null;
@@ -6,5 +7,6 @@ export type UserCreateInput = {
   orders?: OrderCreateNestedManyWithoutUsersInput;
   password: string;
   roles: Array<string>;
+  userDetails?: UserDetailCreateNestedManyWithoutUsersInput;
   username: string;
 };

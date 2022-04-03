@@ -1,4 +1,5 @@
 import { Order } from "../order/Order";
+import { UserDetail } from "../userDetail/UserDetail";
 
 export type User = {
   createdAt: Date;
@@ -8,5 +9,6 @@ export type User = {
   orders?: Array<Order>;
   roles: Array<string>;
   updatedAt: Date;
+  userDetails?: Array<UserDetail>;
   username: string;
 };

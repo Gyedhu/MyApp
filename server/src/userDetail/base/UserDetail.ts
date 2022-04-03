@@ -13,10 +13,9 @@ import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsDate, IsString, IsOptional, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
-import { Order } from "../../order/base/Order";
-import { UserDetail } from "../../userDetail/base/UserDetail";
+import { User } from "../../user/base/User";
 @ObjectType()
-class User {
+class UserDetail {
   @ApiProperty({
     required: true,
   })
@@ -26,15 +25,12 @@ class User {
   createdAt!: Date;
 
   @ApiProperty({
-    required: false,
+    required: true,
     type: String,
   })
   @IsString()
-  @IsOptional()
-  @Field(() => String, {
-    nullable: true,
-  })
-  firstName!: string | null;
+  @Field(() => String)
+  fullname!: string;
 
   @ApiProperty({
     required: true,
@@ -45,6 +41,14 @@ class User {
   id!: string;
 
   @ApiProperty({
+    required: true,
+    type: String,
+  })
+  @IsString()
+  @Field(() => String)
+  job!: string;
+
+  @ApiProperty({
     required: false,
     type: String,
   })
@@ -53,26 +57,7 @@ class User {
   @Field(() => String, {
     nullable: true,
   })
-  lastName!: string | null;
-
-  @ApiProperty({
-    required: false,
-    type: () => [Order],
-  })
-  @ValidateNested()
-  @Type(() => Order)
-  @IsOptional()
-  orders?: Array<Order>;
-
-  @ApiProperty({
-    required: true,
-    type: [String],
-  })
-  @IsString({
-    each: true,
-  })
-  @Field(() => [String])
-  roles!: Array<string>;
+  phone!: string | null;
 
   @ApiProperty({
     required: true,
@@ -84,19 +69,11 @@ class User {
 
   @ApiProperty({
     required: false,
-    type: () => [UserDetail],
+    type: () => User,
   })
   @ValidateNested()
-  @Type(() => UserDetail)
+  @Type(() => User)
   @IsOptional()
-  userDetails?: Array<UserDetail>;
-
-  @ApiProperty({
-    required: true,
-    type: String,
-  })
-  @IsString()
-  @Field(() => String)
-  username!: string;
+  user?: User | null;
 }
-export { User };
+export { UserDetail };

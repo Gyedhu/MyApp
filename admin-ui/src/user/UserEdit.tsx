@@ -11,6 +11,7 @@ import {
 } from "react-admin";
 
 import { OrderTitle } from "../order/OrderTitle";
+import { UserDetailTitle } from "../userDetail/UserDetailTitle";
 import { ROLES_OPTIONS } from "../user/RolesOptions";
 
 export const UserEdit = (props: EditProps): React.ReactElement => {
@@ -34,6 +35,14 @@ export const UserEdit = (props: EditProps): React.ReactElement => {
           optionText="label"
           optionValue="value"
         />
+        <ReferenceArrayInput
+          source="userDetails"
+          reference="UserDetail"
+          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
+          format={(value: any) => value && value.map((v: any) => v.id)}
+        >
+          <SelectArrayInput optionText={UserDetailTitle} />
+        </ReferenceArrayInput>
         <TextInput label="Username" source="username" />
       </SimpleForm>
     </Edit>
