@@ -16,6 +16,7 @@ import { Type } from "class-transformer";
 import { IsOptional, ValidateNested } from "class-validator";
 import { StringFilter } from "../../util/StringFilter";
 import { OrderListRelationFilter } from "../../order/base/OrderListRelationFilter";
+import { PostListRelationFilter } from "../../post/base/PostListRelationFilter";
 import { UserDetailListRelationFilter } from "../../userDetail/base/UserDetailListRelationFilter";
 @InputType()
 class UserWhereInput {
@@ -63,6 +64,18 @@ class UserWhereInput {
     nullable: true,
   })
   orders?: OrderListRelationFilter;
+
+  @ApiProperty({
+    required: false,
+    type: () => PostListRelationFilter,
+  })
+  @ValidateNested()
+  @Type(() => PostListRelationFilter)
+  @IsOptional()
+  @Field(() => PostListRelationFilter, {
+    nullable: true,
+  })
+  posts?: PostListRelationFilter;
 
   @ApiProperty({
     required: false,

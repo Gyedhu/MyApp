@@ -70,12 +70,24 @@ export class PostControllerBase {
       );
     }
     return await this.service.create({
-      data: data,
+      data: {
+        ...data,
+
+        user: {
+          connect: data.user,
+        },
+      },
       select: {
         content: true,
         createdAt: true,
         id: true,
         updatedAt: true,
+
+        user: {
+          select: {
+            id: true,
+          },
+        },
       },
     });
   }
@@ -113,6 +125,12 @@ export class PostControllerBase {
         createdAt: true,
         id: true,
         updatedAt: true,
+
+        user: {
+          select: {
+            id: true,
+          },
+        },
       },
     });
     return results.map((result) => permission.filter(result));
@@ -149,6 +167,12 @@ export class PostControllerBase {
         createdAt: true,
         id: true,
         updatedAt: true,
+
+        user: {
+          select: {
+            id: true,
+          },
+        },
       },
     });
     if (result === null) {
@@ -200,12 +224,24 @@ export class PostControllerBase {
     try {
       return await this.service.update({
         where: params,
-        data: data,
+        data: {
+          ...data,
+
+          user: {
+            connect: data.user,
+          },
+        },
         select: {
           content: true,
           createdAt: true,
           id: true,
           updatedAt: true,
+
+          user: {
+            select: {
+              id: true,
+            },
+          },
         },
       });
     } catch (error) {
@@ -243,6 +279,12 @@ export class PostControllerBase {
           createdAt: true,
           id: true,
           updatedAt: true,
+
+          user: {
+            select: {
+              id: true,
+            },
+          },
         },
       });
     } catch (error) {

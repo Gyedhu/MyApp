@@ -27,6 +27,8 @@ import { UserFindUniqueArgs } from "./UserFindUniqueArgs";
 import { User } from "./User";
 import { OrderFindManyArgs } from "../../order/base/OrderFindManyArgs";
 import { Order } from "../../order/base/Order";
+import { PostFindManyArgs } from "../../post/base/PostFindManyArgs";
+import { Post } from "../../post/base/Post";
 import { UserDetailFindManyArgs } from "../../userDetail/base/UserDetailFindManyArgs";
 import { UserDetail } from "../../userDetail/base/UserDetail";
 import { UserService } from "../user.service";
@@ -224,6 +226,32 @@ export class UserResolverBase {
       resource: "Order",
     });
     const results = await this.service.findOrders(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results.map((result) => permission.filter(result));
+  }
+
+  @graphql.ResolveField(() => [Post])
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "read",
+    possession: "any",
+  })
+  async posts(
+    @graphql.Parent() parent: User,
+    @graphql.Args() args: PostFindManyArgs,
+    @gqlUserRoles.UserRoles() userRoles: string[]
+  ): Promise<Post[]> {
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "read",
+      possession: "any",
+      resource: "Post",
+    });
+    const results = await this.service.findPosts(parent.id, args);
 
     if (!results) {
       return [];
