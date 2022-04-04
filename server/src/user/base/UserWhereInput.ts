@@ -16,8 +16,7 @@ import { Type } from "class-transformer";
 import { IsOptional, ValidateNested } from "class-validator";
 import { StringFilter } from "../../util/StringFilter";
 import { OrderListRelationFilter } from "../../order/base/OrderListRelationFilter";
-import { PostListRelationFilter } from "../../post/base/PostListRelationFilter";
-import { UserDetailWhereUniqueInput } from "../../userDetail/base/UserDetailWhereUniqueInput";
+import { UserDetailListRelationFilter } from "../../userDetail/base/UserDetailListRelationFilter";
 @InputType()
 class UserWhereInput {
   @ApiProperty({
@@ -67,27 +66,15 @@ class UserWhereInput {
 
   @ApiProperty({
     required: false,
-    type: () => PostListRelationFilter,
+    type: () => UserDetailListRelationFilter,
   })
   @ValidateNested()
-  @Type(() => PostListRelationFilter)
+  @Type(() => UserDetailListRelationFilter)
   @IsOptional()
-  @Field(() => PostListRelationFilter, {
+  @Field(() => UserDetailListRelationFilter, {
     nullable: true,
   })
-  posts?: PostListRelationFilter;
-
-  @ApiProperty({
-    required: false,
-    type: () => UserDetailWhereUniqueInput,
-  })
-  @ValidateNested()
-  @Type(() => UserDetailWhereUniqueInput)
-  @IsOptional()
-  @Field(() => UserDetailWhereUniqueInput, {
-    nullable: true,
-  })
-  userDetail?: UserDetailWhereUniqueInput;
+  userDetails?: UserDetailListRelationFilter;
 
   @ApiProperty({
     required: false,

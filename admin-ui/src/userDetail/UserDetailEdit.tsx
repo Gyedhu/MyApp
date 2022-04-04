@@ -1,14 +1,12 @@
 import * as React from "react";
-
 import {
   Edit,
   SimpleForm,
   EditProps,
   TextInput,
-  ReferenceArrayInput,
-  SelectArrayInput,
+  ReferenceInput,
+  SelectInput,
 } from "react-admin";
-
 import { UserTitle } from "../user/UserTitle";
 
 export const UserDetailEdit = (props: EditProps): React.ReactElement => {
@@ -18,14 +16,9 @@ export const UserDetailEdit = (props: EditProps): React.ReactElement => {
         <TextInput label="Fullname" source="fullname" />
         <TextInput label="Job" source="job" />
         <TextInput label="Phone" source="phone" />
-        <ReferenceArrayInput
-          source="users"
-          reference="User"
-          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
-          format={(value: any) => value && value.map((v: any) => v.id)}
-        >
-          <SelectArrayInput optionText={UserTitle} />
-        </ReferenceArrayInput>
+        <ReferenceInput source="user.id" reference="User" label="User">
+          <SelectInput optionText={UserTitle} />
+        </ReferenceInput>
       </SimpleForm>
     </Edit>
   );

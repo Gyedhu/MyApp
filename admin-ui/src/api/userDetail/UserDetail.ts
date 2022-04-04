@@ -7,5 +7,5 @@ export type UserDetail = {
   job: string;
   phone: string | null;
   updatedAt: Date;
-  users?: Array<User>;
+  user?: User | null;
 };
