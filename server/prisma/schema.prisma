@@ -8,17 +8,17 @@ generator client {
 }
 
 model User {
-  createdAt   DateTime     @default(now())
-  firstName   String?
-  id          String       @id @default(cuid())
-  lastName    String?
-  orders      Order[]
-  password    String
-  posts       Post[]
-  roles       String[]
-  updatedAt   DateTime     @updatedAt
-  userDetails UserDetail[]
-  username    String       @unique
+  createdAt  DateTime     @default(now())
+  firstName  String?
+  id         String       @id @default(cuid())
+  lastName   String?
+  orders     Order[]
+  password   String
+  posts      Post[]
+  roles      String[]
+  updatedAt  DateTime     @updatedAt
+  userDetail UserDetail[]
+  username   String       @unique
 }
 
 model Product {

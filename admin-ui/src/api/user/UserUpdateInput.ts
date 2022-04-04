@@ -9,6 +9,6 @@ export type UserUpdateInput = {
   password?: string;
   posts?: PostUpdateManyWithoutUsersInput;
   roles?: Array<string>;
-  userDetails?: UserDetailUpdateManyWithoutUsersInput;
+  userDetail?: UserDetailUpdateManyWithoutUsersInput;
   username?: string;
 };

@@ -92,7 +92,7 @@ class UserCreateInput {
   @Field(() => UserDetailCreateNestedManyWithoutUsersInput, {
     nullable: true,
   })
-  userDetails?: UserDetailCreateNestedManyWithoutUsersInput;
+  userDetail?: UserDetailCreateNestedManyWithoutUsersInput;
 
   @ApiProperty({
     required: true,
