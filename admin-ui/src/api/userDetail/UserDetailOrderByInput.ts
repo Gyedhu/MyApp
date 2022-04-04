@@ -7,5 +7,4 @@ export type UserDetailOrderByInput = {
   job?: SortOrder;
   phone?: SortOrder;
   updatedAt?: SortOrder;
-  userId?: SortOrder;
 };

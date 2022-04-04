@@ -15,7 +15,7 @@ import { IsString, IsOptional, ValidateNested } from "class-validator";
 import { OrderUpdateManyWithoutUsersInput } from "./OrderUpdateManyWithoutUsersInput";
 import { Type } from "class-transformer";
 import { PostUpdateManyWithoutUsersInput } from "./PostUpdateManyWithoutUsersInput";
-import { UserDetailUpdateManyWithoutUsersInput } from "./UserDetailUpdateManyWithoutUsersInput";
+import { UserDetailWhereUniqueInput } from "../../userDetail/base/UserDetailWhereUniqueInput";
 @InputType()
 class UserUpdateInput {
   @ApiProperty({
@@ -90,15 +90,15 @@ class UserUpdateInput {
 
   @ApiProperty({
     required: false,
-    type: () => UserDetailUpdateManyWithoutUsersInput,
+    type: () => UserDetailWhereUniqueInput,
   })
   @ValidateNested()
-  @Type(() => UserDetailUpdateManyWithoutUsersInput)
+  @Type(() => UserDetailWhereUniqueInput)
   @IsOptional()
-  @Field(() => UserDetailUpdateManyWithoutUsersInput, {
+  @Field(() => UserDetailWhereUniqueInput, {
     nullable: true,
   })
-  userDetails?: UserDetailUpdateManyWithoutUsersInput;
+  userDetail?: UserDetailWhereUniqueInput | null;
 
   @ApiProperty({
     required: false,

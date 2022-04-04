@@ -94,14 +94,11 @@ export class UserServiceBase {
       .posts(args);
   }
 
-  async findUserDetails(
-    parentId: string,
-    args: Prisma.UserDetailFindManyArgs
-  ): Promise<UserDetail[]> {
+  async getUserDetail(parentId: string): Promise<UserDetail | null> {
     return this.prisma.user
       .findUnique({
         where: { id: parentId },
       })
-      .userDetails(args);
+      .userDetail();
   }
 }

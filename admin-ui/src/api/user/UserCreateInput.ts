@@ -1,6 +1,6 @@
 import { OrderCreateNestedManyWithoutUsersInput } from "./OrderCreateNestedManyWithoutUsersInput";
 import { PostCreateNestedManyWithoutUsersInput } from "./PostCreateNestedManyWithoutUsersInput";
-import { UserDetailCreateNestedManyWithoutUsersInput } from "./UserDetailCreateNestedManyWithoutUsersInput";
+import { UserDetailWhereUniqueInput } from "../userDetail/UserDetailWhereUniqueInput";
 
 export type UserCreateInput = {
   firstName?: string | null;
@@ -9,6 +9,6 @@ export type UserCreateInput = {
   password: string;
   posts?: PostCreateNestedManyWithoutUsersInput;
   roles: Array<string>;
-  userDetails?: UserDetailCreateNestedManyWithoutUsersInput;
+  userDetail?: UserDetailWhereUniqueInput | null;
   username: string;
 };

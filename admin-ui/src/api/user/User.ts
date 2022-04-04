@@ -11,6 +11,6 @@ export type User = {
   posts?: Array<Post>;
   roles: Array<string>;
   updatedAt: Date;
-  userDetails?: Array<UserDetail>;
+  userDetail?: UserDetail | null;
   username: string;
 };

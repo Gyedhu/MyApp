@@ -8,6 +8,8 @@ import {
   ReferenceArrayInput,
   SelectArrayInput,
   PasswordInput,
+  ReferenceInput,
+  SelectInput,
 } from "react-admin";
 
 import { OrderTitle } from "../order/OrderTitle";
@@ -44,14 +46,13 @@ export const UserCreate = (props: CreateProps): React.ReactElement => {
           optionText="label"
           optionValue="value"
         />
-        <ReferenceArrayInput
-          source="userDetails"
+        <ReferenceInput
+          source="userdetail.id"
           reference="UserDetail"
-          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
-          format={(value: any) => value && value.map((v: any) => v.id)}
+          label="User Detail"
         >
-          <SelectArrayInput optionText={UserDetailTitle} />
-        </ReferenceArrayInput>
+          <SelectInput optionText={UserDetailTitle} />
+        </ReferenceInput>
         <TextInput label="Username" source="username" />
       </SimpleForm>
     </Create>

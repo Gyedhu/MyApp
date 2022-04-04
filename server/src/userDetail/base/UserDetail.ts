@@ -69,11 +69,11 @@ class UserDetail {
 
   @ApiProperty({
     required: false,
-    type: () => User,
+    type: () => [User],
   })
   @ValidateNested()
   @Type(() => User)
   @IsOptional()
-  user?: User | null;
+  users?: Array<User>;
 }
 export { UserDetail };

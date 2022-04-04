@@ -1,8 +1,8 @@
-import { UserWhereUniqueInput } from "../user/UserWhereUniqueInput";
+import { UserCreateNestedManyWithoutUserDetailsInput } from "./UserCreateNestedManyWithoutUserDetailsInput";
 
 export type UserDetailCreateInput = {
   fullname: string;
   job: string;
   phone?: string | null;
-  user?: UserWhereUniqueInput | null;
+  users?: UserCreateNestedManyWithoutUserDetailsInput;
 };

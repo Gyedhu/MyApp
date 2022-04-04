@@ -29,7 +29,6 @@ import { OrderFindManyArgs } from "../../order/base/OrderFindManyArgs";
 import { Order } from "../../order/base/Order";
 import { PostFindManyArgs } from "../../post/base/PostFindManyArgs";
 import { Post } from "../../post/base/Post";
-import { UserDetailFindManyArgs } from "../../userDetail/base/UserDetailFindManyArgs";
 import { UserDetail } from "../../userDetail/base/UserDetail";
 import { UserService } from "../user.service";
 
@@ -137,7 +136,15 @@ export class UserResolverBase {
     // @ts-ignore
     return await this.service.create({
       ...args,
-      data: args.data,
+      data: {
+        ...args.data,
+
+        userDetail: args.data.userDetail
+          ? {
+              connect: args.data.userDetail,
+            }
+          : undefined,
+      },
     });
   }
 
@@ -176,7 +183,15 @@ export class UserResolverBase {
       // @ts-ignore
       return await this.service.update({
         ...args,
-        data: args.data,
+        data: {
+          ...args.data,
+
+          userDetail: args.data.userDetail
+            ? {
+                connect: args.data.userDetail,
+              }
+            : undefined,
+        },
       });
     } catch (error) {
       if (isRecordNotFoundError(error)) {
@@ -260,29 +275,27 @@ export class UserResolverBase {
     return results.map((result) => permission.filter(result));
   }
 
-  @graphql.ResolveField(() => [UserDetail])
+  @graphql.ResolveField(() => UserDetail, { nullable: true })
   @nestAccessControl.UseRoles({
     resource: "User",
     action: "read",
     possession: "any",
   })
-  async userDetails(
+  async userDetail(
     @graphql.Parent() parent: User,
-    @graphql.Args() args: UserDetailFindManyArgs,
     @gqlUserRoles.UserRoles() userRoles: string[]
-  ): Promise<UserDetail[]> {
+  ): Promise<UserDetail | null> {
     const permission = this.rolesBuilder.permission({
       role: userRoles,
       action: "read",
       possession: "any",
       resource: "UserDetail",
     });
-    const results = await this.service.findUserDetails(parent.id, args);
+    const result = await this.service.getUserDetail(parent.id);
 
-    if (!results) {
-      return [];
+    if (!result) {
+      return null;
     }
-
-    return results.map((result) => permission.filter(result));
+    return permission.filter(result);
   }
 }
