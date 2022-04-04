@@ -654,14 +654,14 @@ export class UserControllerBase {
     defaultAuthGuard.DefaultAuthGuard,
     nestAccessControl.ACGuard
   )
-  @common.Get("/:id/userDetails")
+  @common.Get("/:id/userDetail")
   @nestAccessControl.UseRoles({
     resource: "User",
     action: "read",
     possession: "any",
   })
   @ApiNestedQuery(UserDetailFindManyArgs)
-  async findManyUserDetails(
+  async findManyUserDetail(
     @common.Req() request: Request,
     @common.Param() params: UserWhereUniqueInput,
     @nestAccessControl.UserRoles() userRoles: string[]
@@ -673,7 +673,7 @@ export class UserControllerBase {
       possession: "any",
       resource: "UserDetail",
     });
-    const results = await this.service.findUserDetails(params.id, {
+    const results = await this.service.findUserDetail(params.id, {
       ...query,
       select: {
         createdAt: true,
@@ -703,19 +703,19 @@ export class UserControllerBase {
     defaultAuthGuard.DefaultAuthGuard,
     nestAccessControl.ACGuard
   )
-  @common.Post("/:id/userDetails")
+  @common.Post("/:id/userDetail")
   @nestAccessControl.UseRoles({
     resource: "User",
     action: "update",
     possession: "any",
   })
-  async createUserDetails(
+  async createUserDetail(
     @common.Param() params: UserWhereUniqueInput,
     @common.Body() body: UserWhereUniqueInput[],
     @nestAccessControl.UserRoles() userRoles: string[]
   ): Promise<void> {
     const data = {
-      userDetails: {
+      userDetail: {
         connect: body,
       },
     };
@@ -748,19 +748,19 @@ export class UserControllerBase {
     defaultAuthGuard.DefaultAuthGuard,
     nestAccessControl.ACGuard
   )
-  @common.Patch("/:id/userDetails")
+  @common.Patch("/:id/userDetail")
   @nestAccessControl.UseRoles({
     resource: "User",
     action: "update",
     possession: "any",
   })
-  async updateUserDetails(
+  async updateUserDetail(
     @common.Param() params: UserWhereUniqueInput,
     @common.Body() body: UserDetailWhereUniqueInput[],
     @nestAccessControl.UserRoles() userRoles: string[]
   ): Promise<void> {
     const data = {
-      userDetails: {
+      userDetail: {
         set: body,
       },
     };
@@ -793,19 +793,19 @@ export class UserControllerBase {
     defaultAuthGuard.DefaultAuthGuard,
     nestAccessControl.ACGuard
   )
-  @common.Delete("/:id/userDetails")
+  @common.Delete("/:id/userDetail")
   @nestAccessControl.UseRoles({
     resource: "User",
     action: "update",
     possession: "any",
   })
-  async deleteUserDetails(
+  async deleteUserDetail(
     @common.Param() params: UserWhereUniqueInput,
     @common.Body() body: UserWhereUniqueInput[],
     @nestAccessControl.UserRoles() userRoles: string[]
   ): Promise<void> {
     const data = {
-      userDetails: {
+      userDetail: {
         disconnect: body,
       },
     };

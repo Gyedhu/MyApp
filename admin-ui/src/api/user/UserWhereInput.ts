@@ -10,6 +10,6 @@ export type UserWhereInput = {
   lastName?: StringNullableFilter;
   orders?: OrderListRelationFilter;
   posts?: PostListRelationFilter;
-  userDetails?: UserDetailListRelationFilter;
+  userDetail?: UserDetailListRelationFilter;
   username?: StringFilter;
 };

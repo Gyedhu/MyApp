@@ -9,6 +9,6 @@ export type UserCreateInput = {
   password: string;
   posts?: PostCreateNestedManyWithoutUsersInput;
   roles: Array<string>;
-  userDetails?: UserDetailCreateNestedManyWithoutUsersInput;
+  userDetail?: UserDetailCreateNestedManyWithoutUsersInput;
   username: string;
 };

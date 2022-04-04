@@ -45,7 +45,7 @@ export const UserCreate = (props: CreateProps): React.ReactElement => {
           optionValue="value"
         />
         <ReferenceArrayInput
-          source="userDetails"
+          source="userDetail"
           reference="UserDetail"
           parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
           format={(value: any) => value && value.map((v: any) => v.id)}

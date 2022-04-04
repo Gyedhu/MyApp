@@ -87,7 +87,7 @@ class UserWhereInput {
   @Field(() => UserDetailListRelationFilter, {
     nullable: true,
   })
-  userDetails?: UserDetailListRelationFilter;
+  userDetail?: UserDetailListRelationFilter;
 
   @ApiProperty({
     required: false,
