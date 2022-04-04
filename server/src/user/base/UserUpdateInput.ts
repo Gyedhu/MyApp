@@ -98,7 +98,7 @@ class UserUpdateInput {
   @Field(() => UserDetailUpdateManyWithoutUsersInput, {
     nullable: true,
   })
-  userDetails?: UserDetailUpdateManyWithoutUsersInput;
+  userDetail?: UserDetailUpdateManyWithoutUsersInput;
 
   @ApiProperty({
     required: false,

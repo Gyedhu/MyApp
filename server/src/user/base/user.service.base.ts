@@ -94,7 +94,7 @@ export class UserServiceBase {
       .posts(args);
   }
 
-  async findUserDetails(
+  async findUserDetail(
     parentId: string,
     args: Prisma.UserDetailFindManyArgs
   ): Promise<UserDetail[]> {
@@ -102,6 +102,6 @@ export class UserServiceBase {
       .findUnique({
         where: { id: parentId },
       })
-      .userDetails(args);
+      .userDetail(args);
   }
 }

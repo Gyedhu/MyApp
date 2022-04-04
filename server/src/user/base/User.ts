@@ -99,7 +99,7 @@ class User {
   @ValidateNested()
   @Type(() => UserDetail)
   @IsOptional()
-  userDetails?: Array<UserDetail>;
+  userDetail?: Array<UserDetail>;
 
   @ApiProperty({
     required: true,
