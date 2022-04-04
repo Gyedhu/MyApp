@@ -6,14 +6,13 @@ import {
   ShowProps,
   DateField,
   TextField,
-  ReferenceField,
   ReferenceManyField,
   Datagrid,
+  ReferenceField,
 } from "react-admin";
 
 import { PRODUCT_TITLE_FIELD } from "../product/ProductTitle";
 import { USER_TITLE_FIELD } from "./UserTitle";
-import { USERDETAIL_TITLE_FIELD } from "../userDetail/UserDetailTitle";
 
 export const UserShow = (props: ShowProps): React.ReactElement => {
   return (
@@ -25,13 +24,6 @@ export const UserShow = (props: ShowProps): React.ReactElement => {
         <TextField label="Last Name" source="lastName" />
         <TextField label="Roles" source="roles" />
         <DateField source="updatedAt" label="Updated At" />
-        <ReferenceField
-          label="User Detail"
-          source="userdetail.id"
-          reference="UserDetail"
-        >
-          <TextField source={USERDETAIL_TITLE_FIELD} />
-        </ReferenceField>
         <TextField label="Username" source="username" />
         <ReferenceManyField reference="Order" target="UserId" label="Orders">
           <Datagrid rowClick="show">
@@ -50,11 +42,17 @@ export const UserShow = (props: ShowProps): React.ReactElement => {
             </ReferenceField>
           </Datagrid>
         </ReferenceManyField>
-        <ReferenceManyField reference="Post" target="UserId" label="Posts">
+        <ReferenceManyField
+          reference="UserDetail"
+          target="UserId"
+          label="User Details"
+        >
           <Datagrid rowClick="show">
-            <TextField label="Content" source="content" />
             <DateField source="createdAt" label="Created At" />
+            <TextField label="Fullname" source="fullname" />
             <TextField label="ID" source="id" />
+            <TextField label="Job" source="job" />
+            <TextField label="Phone" source="phone" />
             <DateField source="updatedAt" label="Updated At" />
             <ReferenceField label="User" source="user.id" reference="User">
               <TextField source={USER_TITLE_FIELD} />

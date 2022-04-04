@@ -14,8 +14,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsString, IsOptional, ValidateNested } from "class-validator";
 import { OrderUpdateManyWithoutUsersInput } from "./OrderUpdateManyWithoutUsersInput";
 import { Type } from "class-transformer";
-import { PostUpdateManyWithoutUsersInput } from "./PostUpdateManyWithoutUsersInput";
-import { UserDetailWhereUniqueInput } from "../../userDetail/base/UserDetailWhereUniqueInput";
+import { UserDetailUpdateManyWithoutUsersInput } from "./UserDetailUpdateManyWithoutUsersInput";
 @InputType()
 class UserUpdateInput {
   @ApiProperty({
@@ -65,18 +64,6 @@ class UserUpdateInput {
 
   @ApiProperty({
     required: false,
-    type: () => PostUpdateManyWithoutUsersInput,
-  })
-  @ValidateNested()
-  @Type(() => PostUpdateManyWithoutUsersInput)
-  @IsOptional()
-  @Field(() => PostUpdateManyWithoutUsersInput, {
-    nullable: true,
-  })
-  posts?: PostUpdateManyWithoutUsersInput;
-
-  @ApiProperty({
-    required: false,
     type: [String],
   })
   @IsString({
@@ -90,15 +77,15 @@ class UserUpdateInput {
 
   @ApiProperty({
     required: false,
-    type: () => UserDetailWhereUniqueInput,
+    type: () => UserDetailUpdateManyWithoutUsersInput,
   })
   @ValidateNested()
-  @Type(() => UserDetailWhereUniqueInput)
+  @Type(() => UserDetailUpdateManyWithoutUsersInput)
   @IsOptional()
-  @Field(() => UserDetailWhereUniqueInput, {
+  @Field(() => UserDetailUpdateManyWithoutUsersInput, {
     nullable: true,
   })
-  userDetail?: UserDetailWhereUniqueInput | null;
+  userDetails?: UserDetailUpdateManyWithoutUsersInput;
 
   @ApiProperty({
     required: false,

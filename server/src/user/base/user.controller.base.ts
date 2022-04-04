@@ -31,8 +31,9 @@ import { Post } from "../../post/base/Post";
 import { OrderFindManyArgs } from "../../order/base/OrderFindManyArgs";
 import { Order } from "../../order/base/Order";
 import { OrderWhereUniqueInput } from "../../order/base/OrderWhereUniqueInput";
-import { PostFindManyArgs } from "../../post/base/PostFindManyArgs";
-import { PostWhereUniqueInput } from "../../post/base/PostWhereUniqueInput";
+import { UserDetailFindManyArgs } from "../../userDetail/base/UserDetailFindManyArgs";
+import { UserDetail } from "../../userDetail/base/UserDetail";
+import { UserDetailWhereUniqueInput } from "../../userDetail/base/UserDetailWhereUniqueInput";
 @swagger.ApiBearerAuth()
 export class UserControllerBase {
   constructor(
@@ -76,15 +77,7 @@ export class UserControllerBase {
       );
     }
     return await this.service.create({
-      data: {
-        ...data,
-
-        userDetail: data.userDetail
-          ? {
-              connect: data.userDetail,
-            }
-          : undefined,
-      },
+      data: data,
       select: {
         createdAt: true,
         firstName: true,
@@ -92,13 +85,6 @@ export class UserControllerBase {
         lastName: true,
         roles: true,
         updatedAt: true,
-
-        userDetail: {
-          select: {
-            id: true,
-          },
-        },
-
         username: true,
       },
     });
@@ -139,13 +125,6 @@ export class UserControllerBase {
         lastName: true,
         roles: true,
         updatedAt: true,
-
-        userDetail: {
-          select: {
-            id: true,
-          },
-        },
-
         username: true,
       },
     });
@@ -185,13 +164,6 @@ export class UserControllerBase {
         lastName: true,
         roles: true,
         updatedAt: true,
-
-        userDetail: {
-          select: {
-            id: true,
-          },
-        },
-
         username: true,
       },
     });
@@ -244,15 +216,7 @@ export class UserControllerBase {
     try {
       return await this.service.update({
         where: params,
-        data: {
-          ...data,
-
-          userDetail: data.userDetail
-            ? {
-                connect: data.userDetail,
-              }
-            : undefined,
-        },
+        data: data,
         select: {
           createdAt: true,
           firstName: true,
@@ -260,13 +224,6 @@ export class UserControllerBase {
           lastName: true,
           roles: true,
           updatedAt: true,
-
-          userDetail: {
-            select: {
-              id: true,
-            },
-          },
-
           username: true,
         },
       });
@@ -307,13 +264,6 @@ export class UserControllerBase {
           lastName: true,
           roles: true,
           updatedAt: true,
-
-          userDetail: {
-            select: {
-              id: true,
-            },
-          },
-
           username: true,
         },
       });
@@ -520,31 +470,33 @@ export class UserControllerBase {
     defaultAuthGuard.DefaultAuthGuard,
     nestAccessControl.ACGuard
   )
-  @common.Get("/:id/posts")
+  @common.Get("/:id/userDetails")
   @nestAccessControl.UseRoles({
     resource: "User",
     action: "read",
     possession: "any",
   })
-  @ApiNestedQuery(PostFindManyArgs)
-  async findManyPosts(
+  @ApiNestedQuery(UserDetailFindManyArgs)
+  async findManyUserDetails(
     @common.Req() request: Request,
     @common.Param() params: UserWhereUniqueInput,
     @nestAccessControl.UserRoles() userRoles: string[]
-  ): Promise<Post[]> {
-    const query = plainToClass(PostFindManyArgs, request.query);
+  ): Promise<UserDetail[]> {
+    const query = plainToClass(UserDetailFindManyArgs, request.query);
     const permission = this.rolesBuilder.permission({
       role: userRoles,
       action: "read",
       possession: "any",
-      resource: "Post",
+      resource: "UserDetail",
     });
-    const results = await this.service.findPosts(params.id, {
+    const results = await this.service.findUserDetails(params.id, {
       ...query,
       select: {
-        content: true,
         createdAt: true,
+        fullname: true,
         id: true,
+        job: true,
+        phone: true,
         updatedAt: true,
 
         user: {
@@ -567,19 +519,19 @@ export class UserControllerBase {
     defaultAuthGuard.DefaultAuthGuard,
     nestAccessControl.ACGuard
   )
-  @common.Post("/:id/posts")
+  @common.Post("/:id/userDetails")
   @nestAccessControl.UseRoles({
     resource: "User",
     action: "update",
     possession: "any",
   })
-  async createPosts(
+  async createUserDetails(
     @common.Param() params: UserWhereUniqueInput,
     @common.Body() body: UserWhereUniqueInput[],
     @nestAccessControl.UserRoles() userRoles: string[]
   ): Promise<void> {
     const data = {
-      posts: {
+      userDetails: {
         connect: body,
       },
     };
@@ -612,19 +564,19 @@ export class UserControllerBase {
     defaultAuthGuard.DefaultAuthGuard,
     nestAccessControl.ACGuard
   )
-  @common.Patch("/:id/posts")
+  @common.Patch("/:id/userDetails")
   @nestAccessControl.UseRoles({
     resource: "User",
     action: "update",
     possession: "any",
   })
-  async updatePosts(
+  async updateUserDetails(
     @common.Param() params: UserWhereUniqueInput,
-    @common.Body() body: PostWhereUniqueInput[],
+    @common.Body() body: UserDetailWhereUniqueInput[],
     @nestAccessControl.UserRoles() userRoles: string[]
   ): Promise<void> {
     const data = {
-      posts: {
+      userDetails: {
         set: body,
       },
     };
@@ -657,19 +609,19 @@ export class UserControllerBase {
     defaultAuthGuard.DefaultAuthGuard,
     nestAccessControl.ACGuard
   )
-  @common.Delete("/:id/posts")
+  @common.Delete("/:id/userDetails")
   @nestAccessControl.UseRoles({
     resource: "User",
     action: "update",
     possession: "any",
   })
-  async deletePosts(
+  async deleteUserDetails(
     @common.Param() params: UserWhereUniqueInput,
     @common.Body() body: UserWhereUniqueInput[],
     @nestAccessControl.UserRoles() userRoles: string[]
   ): Promise<void> {
     const data = {
-      posts: {
+      userDetails: {
         disconnect: body,
       },
     };
