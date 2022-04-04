@@ -5,5 +5,4 @@ export type PostOrderByInput = {
   createdAt?: SortOrder;
   id?: SortOrder;
   updatedAt?: SortOrder;
-  userId?: SortOrder;
 };

@@ -14,8 +14,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsString, IsOptional, ValidateNested } from "class-validator";
 import { OrderCreateNestedManyWithoutUsersInput } from "./OrderCreateNestedManyWithoutUsersInput";
 import { Type } from "class-transformer";
-import { PostCreateNestedManyWithoutUsersInput } from "./PostCreateNestedManyWithoutUsersInput";
-import { UserDetailWhereUniqueInput } from "../../userDetail/base/UserDetailWhereUniqueInput";
+import { UserDetailCreateNestedManyWithoutUsersInput } from "./UserDetailCreateNestedManyWithoutUsersInput";
 @InputType()
 class UserCreateInput {
   @ApiProperty({
@@ -61,18 +60,6 @@ class UserCreateInput {
   password!: string;
 
   @ApiProperty({
-    required: false,
-    type: () => PostCreateNestedManyWithoutUsersInput,
-  })
-  @ValidateNested()
-  @Type(() => PostCreateNestedManyWithoutUsersInput)
-  @IsOptional()
-  @Field(() => PostCreateNestedManyWithoutUsersInput, {
-    nullable: true,
-  })
-  posts?: PostCreateNestedManyWithoutUsersInput;
-
-  @ApiProperty({
     required: true,
     type: [String],
   })
@@ -84,15 +71,15 @@ class UserCreateInput {
 
   @ApiProperty({
     required: false,
-    type: () => UserDetailWhereUniqueInput,
+    type: () => UserDetailCreateNestedManyWithoutUsersInput,
   })
   @ValidateNested()
-  @Type(() => UserDetailWhereUniqueInput)
+  @Type(() => UserDetailCreateNestedManyWithoutUsersInput)
   @IsOptional()
-  @Field(() => UserDetailWhereUniqueInput, {
+  @Field(() => UserDetailCreateNestedManyWithoutUsersInput, {
     nullable: true,
   })
-  userDetail?: UserDetailWhereUniqueInput | null;
+  userDetails?: UserDetailCreateNestedManyWithoutUsersInput;
 
   @ApiProperty({
     required: true,

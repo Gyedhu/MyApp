@@ -8,12 +8,9 @@ import {
   ReferenceArrayInput,
   SelectArrayInput,
   PasswordInput,
-  ReferenceInput,
-  SelectInput,
 } from "react-admin";
 
 import { OrderTitle } from "../order/OrderTitle";
-import { PostTitle } from "../post/PostTitle";
 import { UserDetailTitle } from "../userDetail/UserDetailTitle";
 import { ROLES_OPTIONS } from "../user/RolesOptions";
 
@@ -32,27 +29,20 @@ export const UserEdit = (props: EditProps): React.ReactElement => {
           <SelectArrayInput optionText={OrderTitle} />
         </ReferenceArrayInput>
         <PasswordInput label="Password" source="password" />
-        <ReferenceArrayInput
-          source="posts"
-          reference="Post"
-          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
-          format={(value: any) => value && value.map((v: any) => v.id)}
-        >
-          <SelectArrayInput optionText={PostTitle} />
-        </ReferenceArrayInput>
         <SelectArrayInput
           source="roles"
           choices={ROLES_OPTIONS}
           optionText="label"
           optionValue="value"
         />
-        <ReferenceInput
-          source="userdetail.id"
+        <ReferenceArrayInput
+          source="userDetails"
           reference="UserDetail"
-          label="User Detail"
+          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
+          format={(value: any) => value && value.map((v: any) => v.id)}
         >
-          <SelectInput optionText={UserDetailTitle} />
-        </ReferenceInput>
+          <SelectArrayInput optionText={UserDetailTitle} />
+        </ReferenceArrayInput>
         <TextInput label="Username" source="username" />
       </SimpleForm>
     </Edit>
