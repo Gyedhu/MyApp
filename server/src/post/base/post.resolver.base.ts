@@ -25,6 +25,7 @@ import { DeletePostArgs } from "./DeletePostArgs";
 import { PostFindManyArgs } from "./PostFindManyArgs";
 import { PostFindUniqueArgs } from "./PostFindUniqueArgs";
 import { Post } from "./Post";
+import { User } from "../../user/base/User";
 import { PostService } from "../post.service";
 
 @graphql.Resolver(() => Post)
@@ -131,7 +132,13 @@ export class PostResolverBase {
     // @ts-ignore
     return await this.service.create({
       ...args,
-      data: args.data,
+      data: {
+        ...args.data,
+
+        user: {
+          connect: args.data.user,
+        },
+      },
     });
   }
 
@@ -170,7 +177,13 @@ export class PostResolverBase {
       // @ts-ignore
       return await this.service.update({
         ...args,
-        data: args.data,
+        data: {
+          ...args.data,
+
+          user: {
+            connect: args.data.user,
+          },
+        },
       });
     } catch (error) {
       if (isRecordNotFoundError(error)) {
@@ -200,5 +213,29 @@ export class PostResolverBase {
       }
       throw error;
     }
+  }
+
+  @graphql.ResolveField(() => User, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: "Post",
+    action: "read",
+    possession: "any",
+  })
+  async user(
+    @graphql.Parent() parent: Post,
+    @gqlUserRoles.UserRoles() userRoles: string[]
+  ): Promise<User | null> {
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "read",
+      possession: "any",
+      resource: "User",
+    });
+    const result = await this.service.getUser(parent.id);
+
+    if (!result) {
+      return null;
+    }
+    return permission.filter(result);
   }
 }
