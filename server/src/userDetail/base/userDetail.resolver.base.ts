@@ -25,6 +25,7 @@ import { DeleteUserDetailArgs } from "./DeleteUserDetailArgs";
 import { UserDetailFindManyArgs } from "./UserDetailFindManyArgs";
 import { UserDetailFindUniqueArgs } from "./UserDetailFindUniqueArgs";
 import { UserDetail } from "./UserDetail";
+import { UserFindManyArgs } from "../../user/base/UserFindManyArgs";
 import { User } from "../../user/base/User";
 import { UserDetailService } from "../userDetail.service";
 
@@ -132,15 +133,7 @@ export class UserDetailResolverBase {
     // @ts-ignore
     return await this.service.create({
       ...args,
-      data: {
-        ...args.data,
-
-        user: args.data.user
-          ? {
-              connect: args.data.user,
-            }
-          : undefined,
-      },
+      data: args.data,
     });
   }
 
@@ -179,15 +172,7 @@ export class UserDetailResolverBase {
       // @ts-ignore
       return await this.service.update({
         ...args,
-        data: {
-          ...args.data,
-
-          user: args.data.user
-            ? {
-                connect: args.data.user,
-              }
-            : undefined,
-        },
+        data: args.data,
       });
     } catch (error) {
       if (isRecordNotFoundError(error)) {
@@ -221,27 +206,29 @@ export class UserDetailResolverBase {
     }
   }
 
-  @graphql.ResolveField(() => User, { nullable: true })
+  @graphql.ResolveField(() => [User])
   @nestAccessControl.UseRoles({
     resource: "UserDetail",
     action: "read",
     possession: "any",
   })
-  async user(
+  async users(
     @graphql.Parent() parent: UserDetail,
+    @graphql.Args() args: UserFindManyArgs,
     @gqlUserRoles.UserRoles() userRoles: string[]
-  ): Promise<User | null> {
+  ): Promise<User[]> {
     const permission = this.rolesBuilder.permission({
       role: userRoles,
       action: "read",
       possession: "any",
       resource: "User",
     });
-    const result = await this.service.getUser(parent.id);
+    const results = await this.service.findUsers(parent.id, args);
 
-    if (!result) {
-      return null;
+    if (!results) {
+      return [];
     }
-    return permission.filter(result);
+
+    return results.map((result) => permission.filter(result));
   }
 }

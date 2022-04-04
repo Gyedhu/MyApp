@@ -1,6 +1,6 @@
 import { OrderUpdateManyWithoutUsersInput } from "./OrderUpdateManyWithoutUsersInput";
 import { PostUpdateManyWithoutUsersInput } from "./PostUpdateManyWithoutUsersInput";
-import { UserDetailUpdateManyWithoutUsersInput } from "./UserDetailUpdateManyWithoutUsersInput";
+import { UserDetailWhereUniqueInput } from "../userDetail/UserDetailWhereUniqueInput";
 
 export type UserUpdateInput = {
   firstName?: string | null;
@@ -9,6 +9,6 @@ export type UserUpdateInput = {
   password?: string;
   posts?: PostUpdateManyWithoutUsersInput;
   roles?: Array<string>;
-  userDetails?: UserDetailUpdateManyWithoutUsersInput;
+  userDetail?: UserDetailWhereUniqueInput | null;
   username?: string;
 };
