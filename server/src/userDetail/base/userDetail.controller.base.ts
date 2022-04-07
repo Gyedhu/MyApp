@@ -79,6 +79,7 @@ export class UserDetailControllerBase {
         },
       },
       select: {
+        age: true,
         createdAt: true,
         fullname: true,
         id: true,
@@ -124,6 +125,7 @@ export class UserDetailControllerBase {
     const results = await this.service.findMany({
       ...args,
       select: {
+        age: true,
         createdAt: true,
         fullname: true,
         id: true,
@@ -168,6 +170,7 @@ export class UserDetailControllerBase {
     const result = await this.service.findOne({
       where: params,
       select: {
+        age: true,
         createdAt: true,
         fullname: true,
         id: true,
@@ -239,6 +242,7 @@ export class UserDetailControllerBase {
           },
         },
         select: {
+          age: true,
           createdAt: true,
           fullname: true,
           id: true,
@@ -284,6 +288,7 @@ export class UserDetailControllerBase {
       return await this.service.delete({
         where: params,
         select: {
+          age: true,
           createdAt: true,
           fullname: true,
           id: true,

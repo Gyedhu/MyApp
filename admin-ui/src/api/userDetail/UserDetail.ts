@@ -1,6 +1,7 @@
 import { User } from "../user/User";
 
 export type UserDetail = {
+  age: number | null;
   createdAt: Date;
   fullname: string;
   id: string;
