@@ -3,8 +3,8 @@ import {
   Show,
   SimpleShowLayout,
   ShowProps,
-  DateField,
   TextField,
+  DateField,
   ReferenceField,
 } from "react-admin";
 import { USER_TITLE_FIELD } from "../user/UserTitle";
@@ -13,6 +13,7 @@ export const UserDetailShow = (props: ShowProps): React.ReactElement => {
   return (
     <Show {...props}>
       <SimpleShowLayout>
+        <TextField label="Age" source="age" />
         <DateField source="createdAt" label="Created At" />
         <TextField label="Fullname" source="fullname" />
         <TextField label="ID" source="id" />

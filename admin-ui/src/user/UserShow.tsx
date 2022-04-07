@@ -59,6 +59,7 @@ export const UserShow = (props: ShowProps): React.ReactElement => {
           label="User Details"
         >
           <Datagrid rowClick="show">
+            <TextField label="Age" source="age" />
             <DateField source="createdAt" label="Created At" />
             <TextField label="Fullname" source="fullname" />
             <TextField label="ID" source="id" />

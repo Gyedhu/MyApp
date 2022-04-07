@@ -11,6 +11,7 @@ import { UserDetailService } from "../userDetail.service";
 const nonExistingId = "nonExistingId";
 const existingId = "existingId";
 const CREATE_INPUT = {
+  age: 42,
   createdAt: new Date(),
   fullname: "exampleFullname",
   id: "exampleId",
@@ -19,6 +20,7 @@ const CREATE_INPUT = {
   updatedAt: new Date(),
 };
 const CREATE_RESULT = {
+  age: 42,
   createdAt: new Date(),
   fullname: "exampleFullname",
   id: "exampleId",
@@ -28,6 +30,7 @@ const CREATE_RESULT = {
 };
 const FIND_MANY_RESULT = [
   {
+    age: 42,
     createdAt: new Date(),
     fullname: "exampleFullname",
     id: "exampleId",
@@ -37,6 +40,7 @@ const FIND_MANY_RESULT = [
   },
 ];
 const FIND_ONE_RESULT = {
+  age: 42,
   createdAt: new Date(),
   fullname: "exampleFullname",
   id: "exampleId",

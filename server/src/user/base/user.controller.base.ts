@@ -676,6 +676,7 @@ export class UserControllerBase {
     const results = await this.service.findUserDetails(params.id, {
       ...query,
       select: {
+        age: true,
         createdAt: true,
         fullname: true,
         id: true,
